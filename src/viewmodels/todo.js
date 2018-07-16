@@ -8,16 +8,12 @@ export default class {
   // when the viewmodel is constructed, attempt to load the todos.
   constructor() {
     this.load();
-
-    autorun(()=>{
-      console.log('someting update!');
-    });
   }
 
   // this is an action, using the "@action" decorator tells MobX we are going to change
   // some observable inside this function. With this function we are going to add a new
   // todo into the tods list.
-  @action
+  @action.bound
   add() {
     // simple vanilla js, adding a new Todo instance to the todos.
     const newTodo = new Todo();
@@ -26,7 +22,7 @@ export default class {
   }
 
   // remove and deletes the given todo
-  @action
+  @action.bound
   remove(todo) {
     const index = this.todos.indexOf(todo);
     if (index > -1) {
@@ -35,7 +31,7 @@ export default class {
   }
 
   // load saved todos, if possible.
-  @action
+  @action.bound
   load() {
     // if the browser has support for localStorage, try to retrieve the saved todos
     if (window.localStorage) {
@@ -47,7 +43,7 @@ export default class {
   }
 
   // save todos, if possible
-  @action
+  @action.bound
   save() {
     // are there invalid todos?
     // if (this.todos.filter(todo => todo.isValid === false).length > 0) {

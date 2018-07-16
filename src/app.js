@@ -3,17 +3,17 @@ import hotable from 'react-hmr-decorator';
 import { Provider } from 'mobx-react';
 
 // import the view and the viewModel
-import { TodoView } from './views/todo';
-import TodoViewModel from './viewmodels/todo';
+import View from './views/todo';
+import ViewModel from './viewmodels/todo';
 
 // create a viewModel singleton
-const viewModel = new TodoViewModel();
+const viewModel = new ViewModel();
 
 @hotable(module)
-export default class extends React.Component{
-  render(){
+export default class extends React.Component {
+  render() {
     return (
-        <TodoView model={viewModel} />
+      <View model={viewModel} />
     )
   }
 }

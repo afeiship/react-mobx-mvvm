@@ -1,6 +1,6 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
-
+import TodoItem from './item';
 // This is a React component.
 // The property "model" of the passed props object is an instance of our TodoViewModel class.
 // do you remember all those @observable and @computed?
@@ -8,7 +8,7 @@ import { observer, inject } from 'mobx-react'
 // those observable property of an object in the component props update,
 // you should pass your component to the "observer" function/decorator
 @observer
-export class TodoView extends React.Component {
+export default class extends React.Component {
 
   render() {
     const model = this.props.model;
@@ -17,40 +17,11 @@ export class TodoView extends React.Component {
     return <div>
       <h1>React & MobX Todo List!</h1>
       <p>
-        <button onClick={() => model.add()}>New Todo</button>
-        <button onClick={() => model.load()}>Reload Todos</button>
-        <button onClick={() => model.save()}>Save Todos</button>
+        <button onClick={model.add}>New Todo</button>
+        <button onClick={model.load}>Reload Todos</button>
+        <button onClick={model.save}>Save Todos</button>
       </p>
-      {model.todos.map((todo, i) => <SingleTodoView key={todo.id} model={model} todo={todo} />)}
+      {model.todos.map((todo, i) => <TodoItem key={todo.id} model={model} todo={todo} />)}
     </div>
   }
-}
-
-// Since putting observer only on the TodoView will result in re-rendering all the todos
-// any time a single todo is updated, we create a subcomponent that handles the editing for a single todo
-// and decorate it with observer. This way updates in the single todo will result in an update of the SingleTodoView.
-@observer
-export class SingleTodoView extends React.Component {
-
-  render() {
-    const model = this.props.model;
-    const todo = this.props.todo;
-
-    console.log('renderItem:=>', todo);
-
-    return <p>
-      #{todo.id}
-      <strong>{todo.text}</strong>
-      <i>{todo.done ? 'DONE!' : ''}</i>
-
-      <br />
-
-      <input type="checkbox" checked={todo.done} onChange={e => todo.done = e.target.checked} />
-      <input type="text" value={todo.text} onChange={e => {
-        console.log(e.target.value);
-        todo.text = e.target.value;
-      }} />
-      <button onClick={() => model.remove(todo)}>Delete</button>
-    </p>
-  }
-}
+};
