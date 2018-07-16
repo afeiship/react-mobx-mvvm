@@ -1,4 +1,4 @@
-import {observable, action} from 'mobx';
+import {observable, action, autorun} from 'mobx';
 import Todo from '../models/todo';
 
 export default class {
@@ -7,7 +7,11 @@ export default class {
 
   // when the viewmodel is constructed, attempt to load the todos.
   constructor() {
-    this.load()
+    this.load();
+
+    autorun(()=>{
+      console.log('someting update!');
+    });
   }
 
   // this is an action, using the "@action" decorator tells MobX we are going to change

@@ -1,5 +1,5 @@
 import React from 'react'
-import { observer } from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 // This is a React component.
 // The property "model" of the passed props object is an instance of our TodoViewModel class.
@@ -35,6 +35,8 @@ export class SingleTodoView extends React.Component {
   render() {
     const model = this.props.model;
     const todo = this.props.todo;
+
+    console.log('renderItem:=>', todo);
 
     return <p>
       #{todo.id}

@@ -13,9 +13,7 @@ const viewModel = new TodoViewModel();
 export default class extends React.Component{
   render(){
     return (
-      <Provider>
         <TodoView model={viewModel} />
-      </Provider>
     )
   }
 }
